@@ -3,11 +3,9 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var bodyParser = require('body-parser');
-
-/*配置路由*/
-var blog = require('./routes/blog');
-var admin = require('./routes/admin');
+var mongoose=require('mongoose');
 
 /*定义app*/
 var app = express();
@@ -22,6 +20,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({secret: 'keyboard cat', resave: false, saveUninitialized: true, cookie: { secure: true }}));
 app.use(require('node-sass-middleware')({
     src: path.join(__dirname, 'public'),
     dest: path.join(__dirname, 'public'),
@@ -33,9 +32,20 @@ app.use(require('node-sass-middleware')({
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'libs')));
 
-/*路由*/
-app.use('/', blog);
-app.use('/admin', admin);
+// 连接数据库
+mongoose.Promise = global.Promise;
+// 创建一个数据库连接
+var db = mongoose.createConnection('mongodb://blog:mitch@localhost/blog');
+// 连接失败
+db.on('error', console.error.bind(console, 'connection error:'));
+// 连接成功
+db.once('open', function (callback) {
+    console.log('connection success');
+});
+
+// 路由
+require('./config/admin-routes')(app);
+require('./config/blog-routes')(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -67,6 +77,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;

@@ -1,0 +1,25 @@
+.login-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(0deg, #10559e 13%, #1e88e5 70%, #108bf3 100%); }
+
+.login-box {
+  background: #fff;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  padding: 0 30px 30px 20px;
+  border-radius: 8px; }
+  .login-box .login-title {
+    font-size: 30px;
+    line-height: 2;
+    color: #8dcbff;
+    text-shadow: 2px 2px 4px #000;
+    text-align: center; }
+
+/*# sourceMappingURL=login.css.map */
