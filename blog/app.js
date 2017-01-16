@@ -43,6 +43,11 @@ db.once('open', function (callback) {
     console.log('connection success');
 });
 
+app.use(function(req, res, next){
+    // console.log(req.path);
+    // console.log(req.body);
+    next();
+});
 // 路由
 require('./config/admin-routes')(app);
 require('./config/blog-routes')(app);

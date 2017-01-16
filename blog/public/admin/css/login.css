@@ -1,5 +1,5 @@
 .login-wrapper {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -11,15 +11,24 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -70%);
   display: block;
-  padding: 0 30px 30px 20px;
   border-radius: 8px; }
+  .login-box .form-horizontal {
+    padding: 0 30px 30px; }
+  .login-box .controls {
+    margin-left: 0;
+    height: 56px; }
+  .login-box input {
+    padding: 9px 12px;
+    font-size: 14px; }
   .login-box .login-title {
     font-size: 30px;
     line-height: 2;
     color: #8dcbff;
     text-shadow: 2px 2px 4px #000;
     text-align: center; }
+  .login-box .button {
+    width: 292px; }
 
 /*# sourceMappingURL=login.css.map */

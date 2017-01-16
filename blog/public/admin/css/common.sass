@@ -1,0 +1,32 @@
+$fontSize: 12, 14, 16, 18, 20
+@each $fz in $fontSize 
+    .fz-#{$fz}
+        font-size: #{$fz}px
+
+$color: 3, 6, 9, 'c', 'f'
+@each $c in $color 
+    .color-#{$c}
+        color: #{'#'}#{$c}#{$c}#{$c}
+
+$space: 5, 10, 15, 20, 30, 40, 50, 60, 70
+@each $s in $space
+    .p-#{$s}
+        padding: #{$s}px
+    .p-t-#{$s}
+        padding-top: #{$s}px
+    .p-l-#{$s}
+        padding-left: #{$s}px
+    .p-r-#{$s}
+        padding-right: #{$s}px
+    .p-b-#{$s}
+        padding-bottom: #{$s}px
+    .m-#{$s}
+        margin: #{$s}px
+    .m-t-#{$s}
+        margin-top: #{$s}px
+    .m-l-#{$s}
+        margin-left: #{$s}px
+    .m-r-#{$s}
+        margin-right: #{$s}px
+    .m-b-#{$s}
+        margin-bottom: #{$s}px
