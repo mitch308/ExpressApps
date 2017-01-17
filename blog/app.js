@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var mongoose=require('mongoose');
+var mongoose = require('mongoose');
 
 /*定义app*/
 var app = express();
@@ -32,25 +32,25 @@ app.use(require('node-sass-middleware')({
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'libs')));
 
-// 连接数据库
-mongoose.Promise = global.Promise;
-// 创建一个数据库连接
-var db = mongoose.createConnection('mongodb://blog:mitch@localhost/blog');
-// 连接失败
-db.on('error', console.error.bind(console, 'connection error:'));
-// 连接成功
-db.once('open', function (callback) {
-    console.log('connection success');
-});
+// 数据库连接
+connect()
+    .on('error', console.log)
+    .on('disconnected', connect)
+    .once('open', function(){
+        console.log('My Blog started');
+    });
 
-app.use(function(req, res, next){
-    // console.log(req.path);
-    // console.log(req.body);
-    next();
-});
+function connect () {
+  var options = { server: { socketOptions: { keepAlive: 1 } } };
+  return mongoose.connect('mongodb://blog:mitch@localhost/blog', options).connection;
+}
+
 // 路由
 require('./config/admin-routes')(app);
 require('./config/blog-routes')(app);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

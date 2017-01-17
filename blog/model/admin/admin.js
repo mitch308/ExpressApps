@@ -14,10 +14,11 @@ function createSalt() {
     return salt;
 }
 
-var Schema = mongoose.Schema;
-
+// 获取mongoose特有的数据类型
 var ObjectId = mongoose.Schema.Types.ObjectId;
-var adminSchema = new Schema({
+
+// 创建schema
+var adminSchema = mongoose.Schema({
     _id: ObjectId,
     username: {type: String, required: '用户名不能为空'},
     password: {type: String, required: '密码不能为空'},
@@ -29,6 +30,7 @@ var adminSchema = new Schema({
     isdel: {type: Boolean, default: false},
 });
 
-var adminModel = mongoose.model('admin',adminSchema);
+// 创建model
+adminModel = mongoose.model('admin',adminSchema);
 
 module.exports = adminModel;

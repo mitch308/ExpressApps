@@ -1,8 +1,10 @@
 var Form = BUI.Form;
 new Form.HForm({
-    srcNode : '#login-form',
-    submitType : 'ajax',
-    callback : function(data){
+    srcNode: '#login-form',
+    submitType: 'ajax',
+    method: 'post',
+    action: '/admin/login',
+    callback: function(data){
         var form = this;
         if(!data.sucess && data.errors){
             BUI.each(data.errors,function(v,k){
@@ -11,9 +13,13 @@ new Form.HForm({
                     field.showErrors([v]);
                 }
             });
+        } else {
+            window.location.href = '/admin/index';
         }
     }
 }).render();
+
+// 逗你玩
 var words = ['你确定你想要账号吗','你一定你想要账号吗','你肯定你想要账号吗','那好吧'];
 var index = 0;
 var length = words.length;

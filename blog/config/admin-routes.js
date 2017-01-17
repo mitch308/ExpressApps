@@ -5,9 +5,9 @@ module.exports = function(app){
     };
     
     /*配置路由*/
-    var index = require('../routes/admin');
+    var index = require('../routes/admin/index');
     var login = require('../routes/admin/login');
 
-    app.use('/admin', index);
+    app.use('/admin/index', index);
     app.use('/admin/login', login);
 };
