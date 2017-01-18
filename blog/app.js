@@ -4,33 +4,44 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var passport = require('passport');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var MongoStore = require('connect-mongo')(session);
+
+/*获取配置项*/
+var config = require('./config/config');
 
 /*定义app*/
 var app = express();
 
-// view engine setup
+/*模板引擎设置*/
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(session({secret: 'keyboard cat', resave: false, saveUninitialized: true, cookie: { secure: true }}));
+app.use(cookieParser(config.cookie.secret));
+app.use(session({
+    secret: config.cookie.secret, 
+    name: config.session.name, 
+    resave: false, 
+    saveUninitialized: true, 
+    cookie: {maxAge: config.cookie.maxAge}, 
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(require('node-sass-middleware')({
     src: path.join(__dirname, 'public'),
     dest: path.join(__dirname, 'public'),
     indentedSyntax: true,
     sourceMap: true
 }));
-
-/*静态资源*/
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'libs')));
 
 // 数据库连接
 connect()
@@ -41,9 +52,13 @@ connect()
     });
 
 function connect () {
-  var options = { server: { socketOptions: { keepAlive: 1 } } };
-  return mongoose.connect('mongodb://blog:mitch@localhost/blog', options).connection;
+    var options = { server: { socketOptions: { keepAlive: 1 } } };
+    return mongoose.connect(config.mongodb, options).connection;
 }
+
+/*静态资源*/
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'libs')));
 
 // 路由
 require('./config/admin-routes')(app);
