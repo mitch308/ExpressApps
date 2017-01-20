@@ -5,7 +5,7 @@ var sha1 = require('sha1');
 /* 登陆页 */
 router.get('/', function(req, res, next) {
     // 判断用户是否登录
-    if (req.isAuthenticated()) return res.redirect('/admin/index');
+    if (req.isAuthenticated()) return res.redirect('/admin/main');
     res.render('admin/login');
 });
 
@@ -20,19 +20,21 @@ passport.use(new LocalStrategy(
         adminModel.findOne({username: username, isdel: false, isusing: true}, function(err, user) {
             if (err) { return done(err); }
             if (!user || user.password !== sha1(password+user.salt)) { return done(null, false); }
-            return done(null, user);
+            var _user = {
+                _id: user.id,
+                username: user.username,
+                nickname: user.nickname
+            };
+            return done(null, _user);
         });
     }
 ));
 passport.serializeUser(function(user, done){
-    done(null, user._id);
+    done(null, user);
 });
 
-passport.deserializeUser(function(user_id, done){
-    adminModel.findOne({_id: user_id}, {username: true, nickname: true, role_id: true}, function(err, user){
-        if (err) { return done(err); }
-        done(null, user);
-    });
+passport.deserializeUser(function(user, done){
+    done(null, user);
 });
 
 /* 登录验证 */

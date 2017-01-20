@@ -1,0 +1,15 @@
+extends layout.jade
+
+block meta
+    link(rel='stylesheet' href='/admin/css/main.css')
+
+block body
+    .header
+        .dl-log 
+            span.m-r-10 欢迎您，#{nickname}
+            a(href='/admin/logout') [退出]
+        .dl-title 博客后台管理系统
+    ul#J_NavContent.dl-tab-conten
+block footer
+    script(src='/admin/js/PageUtil.js')
+    script(src='/admin/js/main.js')

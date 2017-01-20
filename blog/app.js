@@ -43,6 +43,10 @@ app.use(require('node-sass-middleware')({
     sourceMap: true
 }));
 
+/*静态资源*/
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'libs')));
+
 // 数据库连接
 connect()
     .on('error', console.log)
@@ -55,10 +59,6 @@ function connect () {
     var options = { server: { socketOptions: { keepAlive: 1 } } };
     return mongoose.connect(config.mongodb, options).connection;
 }
-
-/*静态资源*/
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'libs')));
 
 // 路由
 require('./config/admin-routes')(app);

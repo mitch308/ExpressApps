@@ -9,9 +9,11 @@ module.exports = function(app){
     });
 
     /*配置路由*/
-    var index = require('../routes/admin/index');
+    var main = require('../routes/admin/main');
     var login = require('../routes/admin/login');
+    var logout = require('../routes/admin/logout');
 
-    app.use('/admin/index', index);
+    app.use('/admin/main', main);
     app.use('/admin/login', login);
+    app.use('/admin/logout', logout);
 };

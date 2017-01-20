@@ -14,7 +14,7 @@ new Form.HForm({
                 }
             });
         } else {
-            window.location.href = '/admin/index';
+            window.location.href = '/admin/main';
         }
     }
 }).render();
