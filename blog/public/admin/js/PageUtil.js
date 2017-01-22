@@ -164,7 +164,7 @@ function findEmptyIndex(array) {
 //获取用户工作区域
 function getAutoHeight() {
     var height = BUI.viewportHeight(),
-        subHeight = 70;
+        subHeight = 44;
     return height - subHeight;
 }
 
@@ -336,11 +336,15 @@ BUI.augment(mainPage, {
             treeId = '#J_' + id + 'Tree';
         module = new tabNav(id, {
             render: tabId,
-            height: getAutoHeight() - 5
+            height: getAutoHeight(),
+            forceFit: {
+                view : true,
+                value : false
+            }
         }, {
             render: treeId,
             items: item.menu,
-            height: getAutoHeight() - 5
+            height: getAutoHeight()
         }, item.collapsed, item.homePage);
         modules[id] = module;
         return module;
@@ -357,7 +361,6 @@ BUI.augment(mainPage, {
     },
     //进行自适应计算
     _initNavItems: function() {
-
         var _self = this,
             navItems = _self.get('navItems'),
             hideItmes = _self.get('hideItmes');
@@ -454,10 +457,10 @@ BUI.augment(mainPage, {
         //清空模块容器
         navContent.children().remove();
 
-        //初始化二级菜单一级Tab
+        //初始化左侧菜单一级Tab
         $.each(modulesConfig, function(index, module) {
             var id = module.id,
-                temp = ['<li class="dl-tab-item ks-hidden"><div class="dl-second-nav"><div class="dl-second-tree" id="J_', id, 'Tree"></div><div class="', CLS_LEFT_SLIB, '-con"><div class="', CLS_LEFT_SLIB, '"></div></div></div><div class="dl-inner-tab" id="J_', id, 'Tab"></div></li>'].join('');
+                temp = ['<li class="', CLS_TAB_ITEM, ' ks-hidden"><div class="dl-second-nav"><div class="dl-second-tree" id="J_', id, 'Tree"></div><div class="', CLS_LEFT_SLIB, '-con"><div class="', CLS_LEFT_SLIB, '"></div></div></div><div class="dl-inner-tab" id="J_', id, 'Tab"></div></li>'].join('');
             new $(temp).appendTo(navContent);
         });
     },
@@ -682,7 +685,8 @@ BUI.augment(mainPage, {
                     id: item.get('id'),
                     title: item.get('text'),
                     closeable: item.get('closeable'),
-                    href: href
+                    href: href,
+                    tpl: '{icon}<span class="tab-item-title"></span><s class="tab-item-close"></s>'
                 }, !!isReload);
 
             } else if (pageId) {

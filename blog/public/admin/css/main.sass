@@ -1,3 +1,12 @@
+@mixin iconfont
+    display: inline-block
+    font-family: bui-iconfont
+    font-style: normal
+    font-weight: 400
+    line-height: 1
+    -webkit-font-smoothing: antialiased
+body
+    overflow: hidden;
 .header
     padding: 0 15px
     line-height: 44px
@@ -10,3 +19,86 @@
         float: right
     a
         color: #fff
+.dl-second-nav 
+    float: left
+    width: 180px
+    position: relative
+    background-color: #363636
+.dl-second-nav, .dl-second-tree, .dl-inner-tab
+    height: 100%
+.bui-side-menu 
+    padding: 0
+    .bui-menu-title
+        color: #fff
+        padding: 12px 8px
+        margin: 0
+        background: none
+        border-bottom: 1px solid #4F4F4F
+        box-shadow: 0 -1px 0 #2C2C2C inset
+        position: relative
+        &:hover:before
+                position: absolute
+                top: 0
+                bottom: 0
+                left: 0
+                display: block
+                width: 3px
+                content: ""
+                background: #2a94db
+        s
+            width: auto
+            height: auto
+            margin-top: 0
+            background: none
+            @include iconfont
+            &:before
+                content: '\f0025'
+        &:after
+            float: right
+            content: '\f0170'
+            margin-right: 10px
+            @include iconfont
+    .bui-menu-item-collapsed .bui-menu-title:after
+        content: '\f016d'
+
+    .menu-second 
+        .bui-menu
+            margin: 0
+            background: #2a2e36
+    .menu-leaf 
+        padding: 8px 0
+        position: relative
+        a
+            background: none
+            color: #fff
+            margin: 0
+            em
+                background: none
+        &:hover, &.bui-menu-item-selected
+            @extend .bui-menu-title:hover
+.dl-inner-tab 
+    margin-left: 180px
+.tab-nav-bar
+    padding-top: 10px
+    border-bottom: 1px solid #ddd
+    background: #efefef
+    .tab-nav-arrow
+        @include iconfont
+        width: auto
+        height: auto
+        text-indent: 0
+        overflow: initial
+        border: 1px solid #e6e6e6
+        padding: 2px 4px
+        background: #e6e6e6
+        color: #666
+        top: 12px
+    .arrow-left
+
+        &:before
+            content: '\f01a8'
+    .tab-nav-wrapper
+        background: none
+    .tab-nav-inner
+        background: none
+
